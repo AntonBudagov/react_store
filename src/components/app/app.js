@@ -9,7 +9,7 @@ import {Route, Switch} from "react-router-dom";
 import {HomePage, CartPage} from "../pages";
 
 const App = (props) => {
-  console.log(props.service.getBooks());
+  // console.log(props.service.getBooks());
   return (
     <Switch>
       <Route path='/' exect component={HomePage}/>
