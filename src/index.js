@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 
 import * as serviceWorker from './serviceWorker';
@@ -10,6 +10,9 @@ import BookstoreService from './services/bookstore-service';
 import App from './components/app';
 import ErrorBoundry from './components/error-boundry';
 import {BookServiceProvider} from './components/bookstore-service-context';
+
+//Pages
+import {HomePage, CartPage} from './components/pages';
 
 import store from './store';
 
@@ -21,6 +24,14 @@ ReactDOM.render(
       <BookServiceProvider value={service}>
         <Router>
           <App />
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <Link className="nav-link" to="/Home">Home <span className="sr-only">(current)</span></Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Cart">Cart</Link>
+            </li>
+          </ul>
         </Router>
       </BookServiceProvider>
     </ErrorBoundry>
