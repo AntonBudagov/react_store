@@ -4,7 +4,9 @@ import {bindActionCreators} from 'redux';
 
 import {withBookServices} from '../hoc-helper'
 import BookListItem from '../book-list-item';
-import {booksLoaded} from '../../actions'
+import Spinner from '../spinner';
+
+import {booksLoaded, booksLoading} from '../../actions'
 
 import './book-list.css';
 import compose from "../../utils";
@@ -15,15 +17,21 @@ class BookList extends Component {
   componentDidMount() {
     // 1. get data
     const {service} = this.props;
-    const data = service.getBooks();
+    const data = service.getBooks().then(data => {
+      this.props.booksLoaded(data);
+    });
+    console.log(data);
 
     // 2. dispatch
     // send to store
-    this.props.booksLoaded(data);
+
   }
 
   render() {
-    const {books} = this.props;
+    const {books, loading} = this.props;
+    if (loading) {
+      return <Spinner/>
+    }
     return (
       <ul className="list-group">
         {
@@ -41,10 +49,11 @@ class BookList extends Component {
 
 }
 
-const mapStateToProps = ({books}) => ({books});
+const mapStateToProps = ({books, loading}) => ({books, loading});
 // I
 const mapDispatchToProps = {
-  booksLoaded
+  booksLoaded,
+  // booksLoading
 };
 //II
 // const mapDispatchToProps = (dispatch) => {
