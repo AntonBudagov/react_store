@@ -11,8 +11,8 @@ import App from './components/app';
 import ErrorBoundry from './components/error-boundry';
 import {BookServiceProvider} from './components/bookstore-service-context';
 
-//Pages
-import {HomePage, CartPage} from './components/pages';
+
+// import {HomePage, CartPage} from './components/pages';
 
 import store from './store';
 
@@ -24,14 +24,14 @@ ReactDOM.render(
       <BookServiceProvider value={service}>
         <Router>
           <App />
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <Link className="nav-link" to="/Home">Home <span className="sr-only">(current)</span></Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/Cart">Cart</Link>
-            </li>
-          </ul>
+          {/*<ul className="navbar-nav mr-auto">*/}
+            {/*<li className="nav-item active">*/}
+              {/*<Link className="nav-link" to="/Home">Home <span className="sr-only">(current)</span></Link>*/}
+            {/*</li>*/}
+            {/*<li className="nav-item">*/}
+              {/*<Link className="nav-link" to="/Cart">Cart</Link>*/}
+            {/*</li>*/}
+          {/*</ul>*/}
         </Router>
       </BookServiceProvider>
     </ErrorBoundry>

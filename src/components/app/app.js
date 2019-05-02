@@ -1,21 +1,28 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {Route, Switch} from "react-router-dom";
 
-import {withBookServices} from '../hoc-helper'
+// import {withBookServices} from '../hoc-helper'
 
 
 import './app.css';
-import {Route, Switch} from "react-router-dom";
+import ShopHeader from '../shop-header';
+// Pages
 import {HomePage, CartPage} from "../pages";
+
 
 const App = (props) => {
   // console.log(props.service.getBooks());
   return (
-    <Switch>
-      <Route path='/' exect component={HomePage}/>
-      <Route path='/cart' component={CartPage}/>
-    </Switch>
+    <main role="main" className="container">
+      <ShopHeader numItems={11} total={2011}/>
+      <Switch>
+        <Route path='/' exect component={HomePage}/>
+        <Route path='/cart' component={CartPage}/>
+      </Switch>
+    </main>
   );
 };
 
-export default withBookServices()(App);
+// export default withBookServices()(App);
+
+export default App;
