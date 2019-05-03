@@ -7,14 +7,13 @@ const booksLoaded = (newBooks) => {
     payload: newBooks
   }
 };
-// const booksLoading = (load) => {
-//   return {
-//     type: 'LOADING',
-//     payload: load
-//   }
-// };
+const booksRequested = () => {
+  return {
+    type: 'BOOKS_REQUESTED'
+  }
+};
 
 export {
   booksLoaded,
-  // booksLoading
+  booksRequested
 };

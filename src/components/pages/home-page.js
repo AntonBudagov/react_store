@@ -5,6 +5,7 @@ import ShoppingCartTable from '../shopping-cart-table'
 const HomePage = () => {
   return (
     <div>
+      <h1>Home Page</h1>
       <BookList/>
       <ShoppingCartTable/>
     </div>

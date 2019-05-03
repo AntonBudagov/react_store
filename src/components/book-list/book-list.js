@@ -6,7 +6,7 @@ import {withBookServices} from '../hoc-helper'
 import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
-import {booksLoaded, booksLoading} from '../../actions'
+import {booksLoaded, booksRequested} from '../../actions'
 
 import './book-list.css';
 import compose from "../../utils";
@@ -16,7 +16,8 @@ class BookList extends Component {
 
   componentDidMount() {
     // 1. get data
-    const {service} = this.props;
+    const {service, booksRequested} = this.props;
+    booksRequested(); // set loading true
     const data = service.getBooks().then(data => {
       this.props.booksLoaded(data);
     });
@@ -53,7 +54,7 @@ const mapStateToProps = ({books, loading}) => ({books, loading});
 // I
 const mapDispatchToProps = {
   booksLoaded,
-  // booksLoading
+  booksRequested
 };
 //II
 // const mapDispatchToProps = (dispatch) => {

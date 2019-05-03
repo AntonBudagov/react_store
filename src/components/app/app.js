@@ -16,7 +16,7 @@ const App = (props) => {
     <main role="main" className="container">
       <ShopHeader numItems={11} total={2011}/>
       <Switch>
-        <Route path='/' exect component={HomePage}/>
+        <Route path='/' exact component={HomePage} />
         <Route path='/cart' component={CartPage}/>
       </Switch>
     </main>
