@@ -13,7 +13,23 @@ import './book-list.css';
 import compose from "../../utils";
 import ErrorIndicator from "../error-indicator/error-indicator";
 
-class BookList extends Component {
+const BooList = ({books}) => {
+  return (
+    <ul className="list-group">
+      {
+        books.map((item) => {
+          return (
+            <li className="list-group-item d-flex justify-content-between align-items-center" key={item.id}>
+              <BookListItem book={item}/>
+            </li>
+          )
+        })
+      }
+    </ul>
+  )
+};
+
+class BookListContainer extends Component {
 
 
   componentDidMount() {
@@ -49,22 +65,25 @@ class BookList extends Component {
     if (error) {
       return <ErrorIndicator/>
     }
-    return (
-      <ul className="list-group">
-        {
-          books.map((item) => {
-            return (
-              <li className="list-group-item d-flex justify-content-between align-items-center" key={item.id}>
-                <BookListItem book={item}/>
-              </li>
-            )
-          })
-        }
-      </ul>
-    )
+    return <BooList books={books}/>
+    // return (
+    //   <ul className="list-group">
+    //     {
+    //       books.map((item) => {
+    //         return (
+    //           <li className="list-group-item d-flex justify-content-between align-items-center" key={item.id}>
+    //             <BookListItem book={item}/>
+    //           </li>
+    //         )
+    //       })
+    //     }
+    //   </ul>
+    // )
   }
 
 }
+
+
 
 //I
 const mapStateToProps = ({books, loading, error}) => ({books, loading, error});
@@ -124,4 +143,4 @@ const mapDispatchToProps = (dispatch, {service}) => {
 export default compose(
   withBookServices(),
   connect(mapStateToProps, mapDispatchToProps)
-)(BookList)
+)(BookListContainer)
