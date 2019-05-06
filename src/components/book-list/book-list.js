@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+// import {bindActionCreators} from 'redux';
 
 import {withBookServices} from '../hoc-helper'
 import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
-import {booksLoaded, booksRequested, booksError} from '../../actions'
+// import {booksLoaded, booksRequested, booksError} from '../../actions';
+import {fetchBooks} from '../../actions'
 
 import './book-list.css';
 import compose from "../../utils";
@@ -16,18 +17,24 @@ class BookList extends Component {
 
 
   componentDidMount() {
+    // this.props.fetchBooks()
+
     // 1. get data
-    const {
-      service,
-      booksLoaded,
-      booksRequested,
-      booksError,
-    } = this.props;
-    booksRequested(); // set loading true
-    const data = service.getBooks().then(data => {
-      booksLoaded(data);
-    }).catch((error) => booksError(error));
+    // const {
+    //   service,
+    //   booksLoaded,
+    //   booksRequested,
+    //   booksError,
+    //   fetchBooks
+    //
+    // } = this.props;
+    const data = this.props.fetchBooks();
     console.log(data);
+    // booksRequested(); // set loading true
+    // const data = service.getBooks().then(data => {
+    //   booksLoaded(data);
+    // }).catch((error) => booksError(error));
+    // console.log(data);
 
     // 2. dispatch
     // send to store
@@ -59,13 +66,38 @@ class BookList extends Component {
 
 }
 
+//I
 const mapStateToProps = ({books, loading, error}) => ({books, loading, error});
-// I
-const mapDispatchToProps = {
-  booksLoaded,
-  booksRequested,
-  booksError
+//----------------------------------------------------------------------------------------------------------------------
+const mapDispatchToProps = (dispatch, {service}) => {
+
+  return {
+    fetchBooks: fetchBooks(service, dispatch)
+  }
 };
+//I.i
+
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//   // booksLoaded,
+//   // booksRequested,
+//   // booksError
+//   // const {service} = ownProps;
+//   // return {
+//   //   fetchBooks: () => {
+//   //     dispatch(booksRequested());
+//   //     return service.getBooks()
+//   //       .then(data => {
+//   //         dispatch(booksLoaded(data))
+//   //     }).catch((error) => dispatch(booksError(error)));
+//   //   }
+//   // }
+// };
+// I
+// const mapDispatchToProps = {
+//   booksLoaded,
+//   booksRequested,
+//   booksError
+// };
 //II
 // const mapDispatchToProps = (dispatch) => {
 //   return bindActionCreators({
@@ -89,4 +121,7 @@ const mapDispatchToProps = {
 // // }
 // export default withBookServices()(connect(mapStateToProps, mapDispatchToProps)(BookList));
 
-export default compose(withBookServices(), connect(mapStateToProps, mapDispatchToProps))(BookList)
+export default compose(
+  withBookServices(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(BookList)

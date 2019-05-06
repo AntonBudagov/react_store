@@ -1,27 +1,37 @@
-const BOOKS_LOADED = 'BOOKS_LOADED'
+const BOOKS_LOADED_SUCCESS = 'BOOKS_LOADED_SUCCESS';
 
 
 const booksLoaded = (newBooks) => {
   return {
-    type: BOOKS_LOADED,
+    type: BOOKS_LOADED_SUCCESS,
     payload: newBooks
   }
 };
 const booksRequested = () => {
   return {
-    type: 'BOOKS_REQUESTED'
+    type: 'FETCH_BOOKS_REQUESTED'
   }
 };
 
 const booksError = (error) => {
   return {
-    type: 'BOOKS_ERROR',
+    type: 'FETCH_BOOKS_ERROR',
     payload: error
   }
 };
 
+// что бы наш компонент зависил от пораметров, а просто вызвал эту функцию без каких либо аргументов
+// остольные параметры не должны касаться компонента dispatch, service
+const fetchBooks = (service, dispatch) => () => {
+  dispatch(booksRequested());
+  service.getBooks()
+    .then(data => dispatch(booksLoaded(data)))
+    .catch((error) => dispatch(booksError(error)));
+};
+
 export {
-  booksLoaded,
-  booksRequested,
-  booksError
+  // booksLoaded,
+  // booksRequested,
+  // booksError,
+  fetchBooks
 };

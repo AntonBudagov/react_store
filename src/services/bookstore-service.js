@@ -26,7 +26,7 @@ export default class BookstoreService {
         } else {
           resolve(this.data)
         }
-      }, 500)
+      }, 100)
     })
   }
 
