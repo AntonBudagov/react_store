@@ -8,21 +8,25 @@ const reducer = (state = initialState, action) => {
     case 'BOOKS_REQUESTED':
       return {
         books: [],
-        loading: true
+        loading: true,
+        error: null
       };
     case 'BOOKS_LOADED':
       return {
         books: action.payload,
-        loading: false
+        loading: false,
+        error: null
       };
-    // case 'LOADING':
-    //   return {
-    //     loading: false
-    //   };
+    case 'BOOKS_ERROR':
+      return {
+        books: [],
+        loading: false,
+        error: action.payload
+      };
+
     default:
       return state;
   }
-  return state;
 };
 
 export default reducer;

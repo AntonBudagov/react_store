@@ -6,21 +6,27 @@ import {withBookServices} from '../hoc-helper'
 import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
-import {booksLoaded, booksRequested} from '../../actions'
+import {booksLoaded, booksRequested, booksError} from '../../actions'
 
 import './book-list.css';
 import compose from "../../utils";
+import ErrorIndicator from "../error-indicator/error-indicator";
 
 class BookList extends Component {
 
 
   componentDidMount() {
     // 1. get data
-    const {service, booksRequested} = this.props;
+    const {
+      service,
+      booksLoaded,
+      booksRequested,
+      booksError,
+    } = this.props;
     booksRequested(); // set loading true
     const data = service.getBooks().then(data => {
-      this.props.booksLoaded(data);
-    });
+      booksLoaded(data);
+    }).catch((error) => booksError(error));
     console.log(data);
 
     // 2. dispatch
@@ -29,9 +35,12 @@ class BookList extends Component {
   }
 
   render() {
-    const {books, loading} = this.props;
+    const {books, loading, error} = this.props;
     if (loading) {
       return <Spinner/>
+    }
+    if (error) {
+      return <ErrorIndicator/>
     }
     return (
       <ul className="list-group">
@@ -50,11 +59,12 @@ class BookList extends Component {
 
 }
 
-const mapStateToProps = ({books, loading}) => ({books, loading});
+const mapStateToProps = ({books, loading, error}) => ({books, loading, error});
 // I
 const mapDispatchToProps = {
   booksLoaded,
-  booksRequested
+  booksRequested,
+  booksError
 };
 //II
 // const mapDispatchToProps = (dispatch) => {
