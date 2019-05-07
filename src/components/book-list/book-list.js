@@ -7,20 +7,21 @@ import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
 // import {booksLoaded, booksRequested, booksError} from '../../actions';
-import {fetchBooks} from '../../actions'
+import {fetchBooks, bookId} from '../../actions'
 
 import './book-list.css';
 import compose from "../../utils";
 import ErrorIndicator from "../error-indicator/error-indicator";
 
-const BooList = ({books}) => {
+const BooList = ({books, onAddedToCart}) => {
   return (
     <ul className="list-group">
       {
         books.map((item) => {
           return (
             <li className="list-group-item d-flex justify-content-between align-items-center" key={item.id}>
-              <BookListItem book={item}/>
+              <BookListItem book={item}
+                            onAddedToCart={() => onAddedToCart(item.id)}/>
             </li>
           )
         })
@@ -44,8 +45,9 @@ class BookListContainer extends Component {
     //   fetchBooks
     //
     // } = this.props;
-    const data = this.props.fetchBooks();
-    console.log(data);
+    // const data =
+    this.props.fetchBooks();
+    // console.log(data);
     // booksRequested(); // set loading true
     // const data = service.getBooks().then(data => {
     //   booksLoaded(data);
@@ -58,14 +60,14 @@ class BookListContainer extends Component {
   }
 
   render() {
-    const {books, loading, error} = this.props;
+    const {books, loading, error, onAddedToCart} = this.props;
     if (loading) {
       return <Spinner/>
     }
     if (error) {
       return <ErrorIndicator/>
     }
-    return <BooList books={books}/>
+    return <BooList books={books} onAddedToCart={onAddedToCart}/>
     // return (
     //   <ul className="list-group">
     //     {
@@ -91,7 +93,13 @@ const mapStateToProps = ({books, loading, error}) => ({books, loading, error});
 const mapDispatchToProps = (dispatch, {service}) => {
 
   return {
-    fetchBooks: fetchBooks(service, dispatch)
+    fetchBooks: fetchBooks(service, dispatch),
+    onAddedToCart: (id) => {
+      dispatch(bookId(id))
+    }
+    // onAddedToCart: (id) => {
+    //   console.log(id);
+    // }
   }
 };
 //I.i

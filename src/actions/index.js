@@ -20,6 +20,13 @@ const booksError = (error) => {
   }
 };
 
+const bookId = (id) => {
+  return {
+    type: 'ADD_BOOK_TO_CARD',
+    payload: id
+  }
+}
+
 // что бы наш компонент зависил от пораметров, а просто вызвал эту функцию без каких либо аргументов
 // остольные параметры не должны касаться компонента dispatch, service
 const fetchBooks = (service, dispatch) => () => {
@@ -33,5 +40,6 @@ export {
   // booksLoaded,
   // booksRequested,
   // booksError,
-  fetchBooks
+  fetchBooks,
+  bookId
 };
