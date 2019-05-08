@@ -21,7 +21,8 @@ const BooList = ({books, onAddedToCart}) => {
           return (
             <li className="list-group-item d-flex justify-content-between align-items-center" key={item.id}>
               <BookListItem book={item}
-                            onAddedToCart={() => onAddedToCart(item.id)}/>
+                            onAddedToCart={() => onAddedToCart(item.id)}
+              />
             </li>
           )
         })
@@ -67,7 +68,8 @@ class BookListContainer extends Component {
     if (error) {
       return <ErrorIndicator/>
     }
-    return <BooList books={books} onAddedToCart={onAddedToCart}/>
+    return <BooList books={books}
+                    onAddedToCart={onAddedToCart}/>
     // return (
     //   <ul className="list-group">
     //     {
@@ -84,7 +86,6 @@ class BookListContainer extends Component {
   }
 
 }
-
 
 
 //I

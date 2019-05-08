@@ -25,7 +25,21 @@ const bookId = (id) => {
     type: 'ADD_BOOK_TO_CARD',
     payload: id
   }
-}
+};
+
+const deleteBookId = (book) => {
+  return {
+    type: 'DELETE_BOOK_FROM_CARD',
+    payload: book
+  }
+};
+
+const inc = (id) => {
+  return {
+    type: 'INC_BOOK',
+    payload: id
+  }
+};
 
 // что бы наш компонент зависил от пораметров, а просто вызвал эту функцию без каких либо аргументов
 // остольные параметры не должны касаться компонента dispatch, service
@@ -41,5 +55,7 @@ export {
   // booksRequested,
   // booksError,
   fetchBooks,
-  bookId
+  bookId,
+  deleteBookId,
+  inc
 };

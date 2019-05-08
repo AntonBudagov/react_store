@@ -20,18 +20,26 @@ const initialState = {
   orderTotal: 300
 };
 
-const updateCartItem = (item = {}, book) => {
-  const {
-    id = book.id,
-    count = 0,
-    total = 0,
-    title = book.title
-  } = item;
-  return {
-    id,
-    count: count + 1,
-    total: total + book.price,
-    title
+const updateCartItem = (item = {}, book, inc = false) => {
+  if (!inc) {
+    const {
+      id = book.id,
+      count = 0,
+      total = 0,
+      title = book.title
+    } = item;
+    return {
+      id,
+      count: count + 1,
+      total: total + book.price,
+      title
+    }
+  } else {
+    return {
+      ...item,
+      count: item.count + 1,
+      total: item.total + book.price,
+    }
   }
 };
 
@@ -84,7 +92,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         cartItems: updateCartItems(state.cartItems, newItem, idx)
       };
-
+    case 'DELETE_BOOK_FROM_CARD':
+      const index = state.cartItems.findIndex(({id}) => id === action.payload);
+      console.log('DELETE_BOOK_FROM_CARD', index);
+      const newArray = [...state.cartItems.slice(0, index), ...state.cartItems.slice(index + 1)];
+      return {
+        ...state,
+        cartItems: [...newArray]
+      };
+    case 'INC_BOOK':
+      console.log('INC_BOOK', action.payload);
+      const incIndex = state.cartItems.findIndex(({id}) => id === action.payload);
+      const _item = state.cartItems[incIndex];
+      const _book = state.books.find(book => action.payload === book.id);
+      let d = updateCartItem(_item, _book, true)
+      console.log(d);
+      return {
+        ...state,
+        cartItems: updateCartItems(state.cartItems, d, incIndex)
+      };
     default:
       return state;
   }
