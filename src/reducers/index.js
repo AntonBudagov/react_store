@@ -1,17 +1,17 @@
 import updateBookList from './book-list';
 import updateShoppingCart from './shoppingcart';
 
-const initialState = {
-  bookList: {
-    books: [],
-    loading: true,
-    error: null,
-  },
-  shoppingCart: {
-    cartItems: [],
-    orderTotal: 0
-  }
-};
+// const initialState = {
+//   bookList: {
+//     books: [],
+//     loading: true,
+//     error: null,
+//   },
+//   shoppingCart: {
+//     cartItems: [],
+//     orderTotal: 0
+//   }
+// };
 
 
 
