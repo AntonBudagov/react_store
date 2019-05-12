@@ -7,7 +7,7 @@ import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
 // import {booksLoaded, booksRequested, booksError} from '../../actions';
-import {fetchBooks, bookId} from '../../actions'
+import {fetchBooks, bookAddToCard} from '../../actions'
 
 import './book-list.css';
 import compose from "../../utils";
@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch, {service}) => {
   return {
     fetchBooks: fetchBooks(service, dispatch),
     onAddedToCart: (id) => {
-      dispatch(bookId(id))
+      dispatch(bookAddToCard(id))
     }
     // onAddedToCart: (id) => {
     //   console.log(id);
