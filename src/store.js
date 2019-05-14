@@ -1,48 +1,17 @@
-import {createStore, compose} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 
 import reducer from './reducers';
-
-// const store = createStore(reducer);
-
-
-// enhancer - улучшать и совершенствовать store;
-const stringEnhancer = createStore => (...args) => {
-  const store = createStore(...args);
-  const originalDispatch = store.dispatch;
-  store.dispatch = (action) => {
-    if (typeof action === 'string') {
-      return originalDispatch({
-        type: action
-      })
-    }
-    return originalDispatch(action)
-  };
-  return store
+// Middleware - моддифицирует то как работает функция dispatch
+// первая функция принимает аргумент store
+// const logMiddleware = (store) => (dispatch) => (action) ...
+// чаще всего вместо dispatch используют next
+const logMiddleware = ({getState}) => (next) => (action) => {
+  console.log(action.type, getState());
+  return next(action)
 };
-const logEnhancer = createStore => (...args) => {
-  const store = createStore(...args);
-  const originalDispatch = store.dispatch;
-  store.dispatch = (action) => {
-    console.log(action.type);
-    return originalDispatch(action)
-  };
-  return store
-};
-const store = createStore(reducer, compose(stringEnhancer, logEnhancer));
-store.dispatch('Hello world');
 
-// example Monkey patching
-// используют в редких случаях когда библиотека не поддерживает что то
-// const originalDispatch = store.dispatch;
-// store.dispatch = (action) => {
-//   if (typeof action === 'string') {
-//     return originalDispatch({
-//       type: action
-//     })
-//   }
-//   return originalDispatch(action)
-// };
+// applyMiddleware - (store enhancer) вызывает оргументы по порядку logMiddleware...
+const store = createStore(reducer, applyMiddleware(logMiddleware));
 
-// store.dispatch('Hello world');
 
 export default store;
