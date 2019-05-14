@@ -1,4 +1,5 @@
 import {createStore, applyMiddleware} from 'redux';
+import thunkMiddleware from 'redux-thunk' // no changes here 😀
 
 import reducer from './reducers';
 // Middleware - моддифицирует то как работает функция dispatch
@@ -11,7 +12,14 @@ const logMiddleware = ({getState}) => (next) => (action) => {
 };
 
 // applyMiddleware - (store enhancer) вызывает оргументы по порядку logMiddleware...
-const store = createStore(reducer, applyMiddleware(logMiddleware));
+const store = createStore(reducer, applyMiddleware(thunkMiddleware, logMiddleware));
 
+const myAction = (dispatch) => {
+  setTimeout(() => dispatch({
+      type: 'DELAY_ACTION'
+    }), 2000)
+};
+
+store.dispatch(myAction);
 
 export default store;
