@@ -50,7 +50,14 @@ const inc = (id) => {
 
 // что бы наш компонент зависил от пораметров, а просто вызвал эту функцию без каких либо аргументов
 // остольные параметры не должны касаться компонента dispatch, service
-const fetchBooks = (service, dispatch) => () => {
+// const fetchBooksOld = (service, dispatch) => () => {
+//   dispatch(booksRequested());
+//   service.getBooks()
+//     .then(data => dispatch(booksLoaded(data)))
+//     .catch((error) => dispatch(booksError(error)));
+// };
+
+const fetchBooks = (service) => () => (dispatch) => {
   dispatch(booksRequested());
   service.getBooks()
     .then(data => dispatch(booksLoaded(data)))

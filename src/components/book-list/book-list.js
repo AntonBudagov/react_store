@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import {bindActionCreators} from 'redux';
+import {bindActionCreators} from 'redux';
 
 import {withBookServices} from '../hoc-helper'
 import BookListItem from '../book-list-item';
@@ -92,16 +92,20 @@ class BookListContainer extends Component {
 const mapStateToProps = ({bookList: {books, loading, error}}) => ({books, loading, error});
 //----------------------------------------------------------------------------------------------------------------------
 const mapDispatchToProps = (dispatch, {service}) => {
-
-  return {
-    fetchBooks: fetchBooks(service, dispatch),
-    onAddedToCart: (id) => {
-      dispatch(bookAddToCard(id))
-    }
-    // onAddedToCart: (id) => {
-    //   console.log(id);
-    // }
-  }
+  return bindActionCreators({
+    fetchBooks: fetchBooks(service),
+    onAddedToCart: bookAddToCard
+    }, dispatch);
+  // return {
+  //   // fetchBooksOld: fetchBooks(service, dispatch),
+  //   fetchBooks: () => dispatch(fetchBooks(service)()),
+  //   onAddedToCart: (id) => {
+  //     dispatch(bookAddToCard(id))
+  //   }
+  //   // onAddedToCart: (id) => {
+  //   //   console.log(id);
+  //   // }
+  // }
 };
 //I.i
 

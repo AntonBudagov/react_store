@@ -14,12 +14,12 @@ const logMiddleware = ({getState}) => (next) => (action) => {
 // applyMiddleware - (store enhancer) вызывает оргументы по порядку logMiddleware...
 const store = createStore(reducer, applyMiddleware(thunkMiddleware, logMiddleware));
 
-const myAction = (dispatch) => {
+const delayedActionCreator = (timeout) => (dispatch) => {
   setTimeout(() => dispatch({
-      type: 'DELAY_ACTION'
-    }), 2000)
+    type: 'DELAYED_ACTION'
+  }), timeout);
 };
 
-store.dispatch(myAction);
+store.dispatch(delayedActionCreator(3000));
 
 export default store;
